@@ -14,14 +14,14 @@ sources, so you don't typically need to configure that for small pet projects th
 executed in your local machine. Here's an example on how you would typically configure the Configuration manager manually.
 <br>
 
-> // The configuration manager is available as a property in both the WebApplicationBuilder and the WebApplication instances.
-> WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-> // Clear the default providers before adding the new ones.
-> builder.Configuration.Sources.Clear();
-> // Add configuration providers, along with the filename that we will use.
-> builder.Configuration.AddJsonFile("appsettings.json", optional: true);
-> // Variables in the config file are now available in the ConfigurationManager instance
-> var isPurchasesEnabled = builder.Configuration["FeatureFlags:PurchasesEnabled"];
+> // The configuration manager is available as a property in both the WebApplicationBuilder and the WebApplication instances. <br>
+> WebApplicationBuilder builder = WebApplication.CreateBuilder(args); <br>
+> // Clear the default providers before adding the new ones. <br>
+> builder.Configuration.Sources.Clear(); <br>
+> // Add configuration providers, along with the filename that we will use. <br>
+> builder.Configuration.AddJsonFile("appsettings.json", optional: true); <br>
+> // Variables in the config file are now available in the ConfigurationManager instance <br>
+> var isPurchasesEnabled = builder.Configuration["FeatureFlags:PurchasesEnabled"]; <br>
 
 It's important to be aware of the order in which the configuration providers are attached to the 
 ConfigurationManager, as the variables of the latest provider will override the variables of all the previous
