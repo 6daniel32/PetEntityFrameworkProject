@@ -14,7 +14,8 @@ sources, so you don't typically need to configure that for small pet projects th
 executed in your local machine. Here's an example on how you would typically configure the Configuration manager manually.
 <br>
 
-> // The configuration manager is available as a property in both the WebApplicationBuilder and the WebApplication instances. <br>
+> // The configuration manager is available as a property in both the WebApplicationBuilder and the <br>
+> // WebApplication instances. <br>
 > WebApplicationBuilder builder = WebApplication.CreateBuilder(args); <br>
 > // Clear the default providers before adding the new ones. <br>
 > builder.Configuration.Sources.Clear(); <br>
