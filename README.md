@@ -53,5 +53,32 @@ In a mac/linux machine, the location will be:
 > "~/.microsoft/usersecrets/{YOUR_PROJECT_USER_SECRETS_ID}/secrets.json"
 <br>
 
-## Setting up a database connection
-TODO
+## Database set up
+This section includes setting up the database connection, as well as preparing the tools to start developing using Entity Framework Core.
+<br>
+
+### 1. Get a database that can be reached by your .NET application using a connection string
+I recommend using Docker for simplicity.
+<br>
+
+### 2. Add the connection string to the ConfigurationManager of your application using user secrets as explained above
+<br>
+
+### 3. Install the database nuget packages
+Package for connecting your app to a PostgreSQL database:
+> dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+Package for working with EF migrations and automatically creating a DbContext class from an existing database:
+> dotnet add package Microsoft.EntityFrameworkCore.Design
+Package for managing EF from the CLI (needed to run your migrations):
+> dotnet add package Microsoft.EntityFrameworkCore.Tools
+<br>
+
+### 3. Create a DbContext class
+This class must inherit from Microsoft.EntityFrameworkCore.DbContext and expose a constructor that accepts the database connection options. This class adds a data context to the application, implementing both the "repository" and "unit of work" patterns. This class will also expose the Entity classes that represent a table of your database by using the DbSet<> method.
+<br>
+
+### 4. Add your DbContext to the service container of your web application
+This can be done using the "AddDbContext" extension method in the "Services" property of your app. This method takes a configuration function that receives an instance of "DbContextOptionsBuilder" as a parameter. You will apply another extension method 
+"Use{DatabaseProvider}" to set the database provider. Example:
+> builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+<br>
