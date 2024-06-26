@@ -67,8 +67,12 @@ I recommend using Docker for simplicity.
 ### 3. Install the database nuget packages
 Package for connecting your app to a PostgreSQL database:
 > dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+<br>
+
 Package for working with EF migrations and automatically creating a DbContext class from an existing database:
 > dotnet add package Microsoft.EntityFrameworkCore.Design
+<br>
+
 Package for managing EF from the CLI (needed to run your migrations):
 > dotnet add package Microsoft.EntityFrameworkCore.Tools
 <br>
