@@ -101,6 +101,8 @@ See the codebase for reference
 ### 8. Create your first migration and run it to create your tables in the database
 Create migrations from your models:
 > dotnet ef migrations add InitialSchema
+<br>
+
 Run your migrations:
 > dotnet ef database update
 <br>
