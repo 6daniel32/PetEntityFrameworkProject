@@ -77,12 +77,30 @@ Package for managing EF from the CLI (needed to run your migrations):
 > dotnet add package Microsoft.EntityFrameworkCore.Tools
 <br>
 
-### 4. Create a DbContext class
+### 4. Install the ef tool locally
+First, add a tool-manifest for the project
+> dotnet new tool-manifest
+Second, locally install the EF tool in order to manage EF from the CLI
+> dotnet tool install dotnet-ef
+<br> 
+
+### 5. Create a DbContext class
 This class must inherit from Microsoft.EntityFrameworkCore.DbContext and expose a constructor that accepts the database connection options. This class adds a data context to the application, implementing both the "repository" and "unit of work" patterns. This class will also expose the Entity classes that represent a table of your database by using the DbSet<> method.
 <br>
 
-### 5. Add your DbContext to the service container of your web application
+### 6. Add your DbContext to the service container of your web application
 This can be done using the "AddDbContext" extension method in the "Services" property of your app. This method takes a configuration function that receives an instance of "DbContextOptionsBuilder" as a parameter. You will apply another extension method 
 "Use{DatabaseProvider}" to set the database provider. Example:
 > builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+<br>
+
+### 7. Create your models and add them to your DbContext class
+See the codebase for reference
+<br>
+
+### 8. Create your first migration and run it to create your tables in the database
+Create migrations from your models:
+> dotnet ef migrations add InitialSchema
+Run your migrations:
+> dotnet ef database update
 <br>
