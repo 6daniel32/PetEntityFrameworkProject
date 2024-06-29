@@ -6,22 +6,14 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
+builder.Services.AddControllers();
+
 var app = builder.Build();
+
+app.UseRouting();
 
 app.MapGet("/", () => "Hello World!");
 
-app.MapGet("/testdb", async (AppDbContext db) =>
-{
-    try
-    {
-        await db.Database.OpenConnectionAsync();
-        db.Database.CloseConnection();
-        return "Successfully connected to the database.";
-    }
-    catch (Exception e)
-    {
-        return $"An error occurred: {e.Message}";
-    }
-});
+app.MapControllers();
 
 app.Run();
