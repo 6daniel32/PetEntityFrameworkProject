@@ -9,8 +9,8 @@ public class Company {
     [MaxLength(50)]
     public string Name { get; set; }
     // This model is the parent of a OneToMany relationship with the Trainee
-    // model. The relationship is initialized to an empty implementation of 
-    // the ICollection interface
+    // model. The relationship is defaulted to an empty implementation of 
+    // the ICollection interface to avoid null reference exceptions.
     public ICollection<Trainee> Trainees { get; } = new List<Trainee>();
     // The constructor supports Nullable Reference Types (NRT), which 
     // removes the warnings about uninitialized properties.
