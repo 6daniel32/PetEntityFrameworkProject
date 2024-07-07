@@ -9,9 +9,14 @@ public class Company {
     [MaxLength(50)]
     public string Name { get; set; }
     // This model is the parent of a OneToMany relationship with the Trainee
-    // model. The relationship is defaulted to an empty implementation of 
-    // the ICollection interface to avoid null reference exceptions.
+    // model.
+    // Defaults to a null forgiving operator to avoid warnings about 
+    // uninitialized properties.
     public ICollection<Trainee> Trainees { get; } = new List<Trainee>();
+    // The timestamp attribute will automatically be updated by the database.
+    [Timestamp]
+    public byte[] UpdatedAt { get; set; } = null!;
+
     // The constructor supports Nullable Reference Types (NRT), which 
     // removes the warnings about uninitialized properties.
     public Company(string name) {
