@@ -9,7 +9,9 @@ public static class ServiceExtensions {
         services.AddDbContext<AppDbContext>(delegate(DbContextOptionsBuilder options) {
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
         });
-        services.AddControllers();
+        services.AddControllers().AddJsonOptions(options => {
+            options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+        });
         // Custom services
         services.AddScoped<CompanyFactory>();
         services.AddScoped<TraineeFactory>();

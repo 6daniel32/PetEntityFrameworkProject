@@ -22,6 +22,17 @@ public class CompanyController : ControllerBase
         return await _db.Companies.ToListAsync();
     }
 
+    [HttpGet("{companyId}")]
+    public async Task<IActionResult> Show(
+        [FromRoute] Guid companyId
+    ) {
+        Company? company = await _db.Companies
+            .Include(c => c.Trainees)
+            .FirstOrDefaultAsync(c => c.CompanyId == companyId);
+        if (company == null) return NotFound();
+        return Ok(company);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Store(
         [FromBody] UpsertCompanyDto companyDto
