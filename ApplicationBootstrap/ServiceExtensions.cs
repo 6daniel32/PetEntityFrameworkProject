@@ -11,7 +11,8 @@ public static class ServiceExtensions {
         });
         services.AddControllers();
         // Custom services
-        services.AddScoped<ICompanyFactory, CompanyFactory>();
+        services.AddScoped<CompanyFactory>();
+        services.AddScoped<TraineeFactory>();
         return services;
     }
 }

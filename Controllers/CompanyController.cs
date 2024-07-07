@@ -8,9 +8,9 @@ namespace PetEntityFrameworkProject.Controllers;
 public class CompanyController : ControllerBase
 {
     private readonly AppDbContext _db;
-    private readonly ICompanyFactory _companyFactory;
+    private readonly CompanyFactory _companyFactory;
 
-    public CompanyController(AppDbContext db, ICompanyFactory companyFactory)
+    public CompanyController(AppDbContext db, CompanyFactory companyFactory)
     {
         _db = db;
         _companyFactory = companyFactory;
@@ -23,8 +23,9 @@ public class CompanyController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Store([FromBody] UpsertCompanyDto companyDto)
-    {
+    public async Task<IActionResult> Store(
+        [FromBody] UpsertCompanyDto companyDto
+    ) {
         Company company = _companyFactory.Create(companyDto.Name);
         _db.Companies.Add(company);
         await _db.SaveChangesAsync();
@@ -32,13 +33,34 @@ public class CompanyController : ControllerBase
     }
 
     [HttpDelete("{companyId}")]
-    public async Task<IActionResult> Delete(Guid companyId) 
-    {
+    public async Task<IActionResult> Delete(
+        [FromRoute] Guid companyId
+    ) {
         Company? company = await _db.Companies.FindAsync(companyId);
+        /* Note: dotnet is made to have these null checks.
+         * trying to abstract request validation logic into DTO's with 
+         * custom data annotations (which override the default 
+         * ValidationResult function) requires more effort than 
+         * benefits and additionally, won't remove the IDE warnings
+         * that check for possible null values, since dotnet would not
+         * track the validation done previously. */
         if (company == null) return NotFound();
         
         _db.Companies.Remove(company);
         await _db.SaveChangesAsync();
         return Ok("Company deleted");
+    }
+
+    [HttpPut("{companyId}")]
+    public async Task<IActionResult> Update(
+        [FromRoute] Guid companyId, 
+        [FromBody] UpsertCompanyDto companyDto
+    ) {
+        Company? company = await _db.Companies.FindAsync(companyId);
+        if (company == null) return NotFound();
+
+        company.Name = companyDto.Name;
+        await _db.SaveChangesAsync();
+        return Ok("Company updated");
     }
 }
