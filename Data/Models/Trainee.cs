@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class Trainee {
     public Guid TraineeId { get; set; }
@@ -10,8 +11,6 @@ public class Trainee {
     // This property that references the parent model of the relationship 
     // is known as a "reference navigation" property.
     public Company Company {get; set; } = null!;
-    [Timestamp]
-    public byte[] UpdatedAt { get; set; } = null!;
     
     public Trainee(string name) {
         Name = name;
