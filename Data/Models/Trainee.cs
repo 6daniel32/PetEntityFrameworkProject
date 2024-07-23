@@ -9,7 +9,7 @@ public class Trainee {
     // key can't be null. Forcing trainees to belong to a company.
     // This property that references the parent model of the relationship 
     // is known as a "reference navigation" property.
-    public Company Company {get; set; } = null!;
+    public Company Company { get; set; } = null!;
     
     public Trainee(string name) {
         Name = name;
