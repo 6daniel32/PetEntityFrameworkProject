@@ -24,6 +24,7 @@ public class CompanyController : ControllerBase
 
     [HttpGet("{companyId}")]
     public async Task<IActionResult> Show(
+        // TODO: explore route-model binding
         [FromRoute] Guid companyId
     ) {
         Company? company = await _db.Companies
@@ -45,6 +46,7 @@ public class CompanyController : ControllerBase
 
     [HttpDelete("{companyId}")]
     public async Task<IActionResult> Delete(
+        // TODO: explore route-model binding
         [FromRoute] Guid companyId
     ) {
         Company? company = await _db.Companies.FindAsync(companyId);
@@ -64,6 +66,7 @@ public class CompanyController : ControllerBase
 
     [HttpPut("{companyId}")]
     public async Task<IActionResult> Update(
+        // TODO: explore route-model binding
         [FromRoute] Guid companyId, 
         [FromBody] UpsertCompanyDto companyDto
     ) {
