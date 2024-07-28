@@ -27,7 +27,7 @@ public class CompanyController : ControllerBase
         [FromRoute] Guid companyId
     ) {
         Company? company = await _db.Companies
-            .Include(c => c.Trainees)
+            .Include(c => c.Employees)
             .FirstOrDefaultAsync(c => c.CompanyId == companyId);
         if (company == null) return NotFound();
         return Ok(company);

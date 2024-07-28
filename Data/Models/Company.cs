@@ -8,11 +8,11 @@ public class Company {
     // Data annotations limit the size of the column in the database.
     [MaxLength(50)]
     public string Name { get; set; }
-    // This model is the parent of a OneToMany relationship with the Trainee
+    // This model is the parent of a OneToMany relationship with the Employee
     // model.
     // Defaults to a null forgiving operator to avoid warnings about 
     // uninitialized properties.
-    public ICollection<Trainee> Trainees { get; } = new List<Trainee>();
+    public ICollection<Employee> Employees { get; } = new List<Employee>();
 
     // The constructor supports Nullable Reference Types (NRT), which 
     // removes the warnings about uninitialized properties.

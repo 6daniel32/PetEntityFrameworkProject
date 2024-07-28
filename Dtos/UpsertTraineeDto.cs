@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-public readonly record struct UpsertTraineeDto
+public readonly record struct UpsertEmployeeDto
 {
     [Required]
     [MaxLength(50)]
@@ -8,7 +8,7 @@ public readonly record struct UpsertTraineeDto
     [Required]
     public Guid CompanyId { get; init; }
 
-    public UpsertTraineeDto(string name, Guid companyId)
+    public UpsertEmployeeDto(string name, Guid companyId)
     {
         Name = name;
         CompanyId = companyId;
