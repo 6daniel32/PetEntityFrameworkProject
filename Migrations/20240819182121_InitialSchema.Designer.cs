@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace PetEntityFrameworkProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240629130518_InitialSchema")]
+    [Migration("20240819182121_InitialSchema")]
     partial class InitialSchema
     {
         /// <inheritdoc />

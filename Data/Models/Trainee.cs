@@ -10,6 +10,7 @@ public class Trainee {
     // This property that references the parent model of the relationship 
     // is known as a "reference navigation" property.
     public Company Company { get; set; } = null!;
+    public ICollection<Test> Tests { get; } = new List<Test>();
     
     public Trainee(string name) {
         Name = name;

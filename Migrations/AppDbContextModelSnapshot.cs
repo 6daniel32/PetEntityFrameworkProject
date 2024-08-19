@@ -37,6 +37,37 @@ namespace PetEntityFrameworkProject.Migrations
                     b.ToTable("Companies");
                 });
 
+            modelBuilder.Entity("Test", b =>
+                {
+                    b.Property<Guid>("TestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("TestId");
+
+                    b.ToTable("Test");
+                });
+
+            modelBuilder.Entity("TestTrainee", b =>
+                {
+                    b.Property<Guid>("TestsTestId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TraineesTraineeId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("TestsTestId", "TraineesTraineeId");
+
+                    b.HasIndex("TraineesTraineeId");
+
+                    b.ToTable("TestTrainee");
+                });
+
             modelBuilder.Entity("Trainee", b =>
                 {
                     b.Property<Guid>("TraineeId")
@@ -56,6 +87,21 @@ namespace PetEntityFrameworkProject.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("Trainees");
+                });
+
+            modelBuilder.Entity("TestTrainee", b =>
+                {
+                    b.HasOne("Test", null)
+                        .WithMany()
+                        .HasForeignKey("TestsTestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Trainee", null)
+                        .WithMany()
+                        .HasForeignKey("TraineesTraineeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Trainee", b =>
