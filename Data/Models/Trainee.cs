@@ -11,6 +11,7 @@ public class Trainee {
     // is known as a "reference navigation" property.
     public Company Company { get; set; } = null!;
     public ICollection<Test> Tests { get; } = new List<Test>();
+    public ICollection<Course> Courses { get; } = new List<Course>();
     
     public Trainee(string name) {
         Name = name;
