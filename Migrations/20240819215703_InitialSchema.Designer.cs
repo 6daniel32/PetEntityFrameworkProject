@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace PetEntityFrameworkProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240819204936_Many2ManyPolymorphicRelationship")]
-    partial class Many2ManyPolymorphicRelationship
+    [Migration("20240819215703_InitialSchema")]
+    partial class InitialSchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
