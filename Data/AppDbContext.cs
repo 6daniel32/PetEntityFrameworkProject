@@ -17,7 +17,7 @@ public class AppDbContext : DbContext {
     public DbSet<SupportCentre> SupportCentres { get; set; }
     public DbSet<SupportableSupportCentre> SupportableSupportCentres { get; set; }
     // - End of Many2Many Polymorphic relationship (tables declaration section)
-    
+    // TODO: give up in any type of "Polymorphic" relationships since EF Core does not support them.
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // - Start of Many2Many Polymorphic relationship (OnModelCreating)
