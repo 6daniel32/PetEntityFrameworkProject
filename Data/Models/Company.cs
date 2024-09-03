@@ -13,6 +13,9 @@ public class Company {
     // Defaults to a null forgiving operator to avoid warnings about 
     // uninitialized properties.
     public ICollection<Trainee> Trainees { get; } = new List<Trainee>();
+    // This model participates in an optional OneToOne relationship with the 
+    // Address model
+    public Address? Address { get; set; }
 
     // The constructor supports Nullable Reference Types (NRT), which 
     // removes the warnings about uninitialized properties.

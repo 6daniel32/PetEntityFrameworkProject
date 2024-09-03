@@ -10,6 +10,8 @@ public class Trainee {
     // This property that references the parent model of the relationship 
     // is known as a "reference navigation" property.
     public Company Company { get; set; } = null!;
+    // Navigation properties for the ManyToMany relationships with
+    // Tests and Courses.
     public ICollection<Test> Tests { get; } = new List<Test>();
     public ICollection<Course> Courses { get; } = new List<Course>();
     
