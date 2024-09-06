@@ -5,6 +5,9 @@ public class TraineeEntityTypeConfiguration : IEntityTypeConfiguration<TraineeFl
 {
     public void Configure(EntityTypeBuilder<TraineeFluent> builder)
     {
+        // Specify table name
+        builder.ToTable("FluentTrainees");
+
         // Configure primary key
         builder.HasKey(t => t.TraineeId);
 
@@ -26,7 +29,7 @@ public class TraineeEntityTypeConfiguration : IEntityTypeConfiguration<TraineeFl
             .WithMany(tr => tr.Trainees)
             // Configuring the pivot table is optional, but recommended
             .UsingEntity<Dictionary<string,object>>(
-                "TraineeTest",
+                "FluentTraineeTest",
                 j => j
                     .HasOne<TestFluent>()
                     .WithMany()

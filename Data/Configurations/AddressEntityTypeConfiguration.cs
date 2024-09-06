@@ -5,6 +5,9 @@ public class AddressEntityTypeConfiguration : IEntityTypeConfiguration<AddressFl
 {
     public void Configure(EntityTypeBuilder<AddressFluent> builder)
     {
+        // Specify table name
+        builder.ToTable("FluentAddresses");
+
         // Configure primary key
         builder.HasKey(t => t.AddressId);
 

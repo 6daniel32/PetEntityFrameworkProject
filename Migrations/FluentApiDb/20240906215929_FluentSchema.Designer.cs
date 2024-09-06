@@ -8,11 +8,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace PetEntityFrameworkProject.Migrations
+namespace PetEntityFrameworkProject.Migrations.FluentApiDb
 {
-    [DbContext(typeof(AppDbContext))]
-    [Migration("20240903221748_DropPolymorphicRelationships")]
-    partial class DropPolymorphicRelationships
+    [DbContext(typeof(FluentApiDbContext))]
+    [Migration("20240906215929_FluentSchema")]
+    partial class FluentSchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace PetEntityFrameworkProject.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Address", b =>
+            modelBuilder.Entity("AddressFluent", b =>
                 {
                     b.Property<int>("AddressId")
                         .ValueGeneratedOnAdd()
@@ -60,10 +60,10 @@ namespace PetEntityFrameworkProject.Migrations
                     b.HasIndex("CompanyId")
                         .IsUnique();
 
-                    b.ToTable("Addresses");
+                    b.ToTable("FluentAddresses", (string)null);
                 });
 
-            modelBuilder.Entity("Company", b =>
+            modelBuilder.Entity("CompanyFluent", b =>
                 {
                     b.Property<Guid>("CompanyId")
                         .ValueGeneratedOnAdd()
@@ -76,41 +76,25 @@ namespace PetEntityFrameworkProject.Migrations
 
                     b.HasKey("CompanyId");
 
-                    b.ToTable("Companies");
+                    b.ToTable("FluentCompanies", (string)null);
                 });
 
-            modelBuilder.Entity("Course", b =>
+            modelBuilder.Entity("FluentTraineeTest", b =>
                 {
-                    b.Property<Guid>("CourseId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("TestId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                    b.Property<Guid>("TraineeId")
+                        .HasColumnType("uuid");
 
-                    b.HasKey("CourseId");
+                    b.HasKey("TestId", "TraineeId");
 
-                    b.ToTable("Courses");
+                    b.HasIndex("TraineeId");
+
+                    b.ToTable("FluentTraineeTest");
                 });
 
-            modelBuilder.Entity("CourseTrainee", b =>
-                {
-                    b.Property<Guid>("CoursesCourseId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("TraineesTraineeId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("CoursesCourseId", "TraineesTraineeId");
-
-                    b.HasIndex("TraineesTraineeId");
-
-                    b.ToTable("CourseTrainee");
-                });
-
-            modelBuilder.Entity("Test", b =>
+            modelBuilder.Entity("TestFluent", b =>
                 {
                     b.Property<Guid>("TestId")
                         .ValueGeneratedOnAdd()
@@ -123,25 +107,10 @@ namespace PetEntityFrameworkProject.Migrations
 
                     b.HasKey("TestId");
 
-                    b.ToTable("Tests");
+                    b.ToTable("FluentTests", (string)null);
                 });
 
-            modelBuilder.Entity("TestTrainee", b =>
-                {
-                    b.Property<Guid>("TestsTestId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("TraineesTraineeId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("TestsTestId", "TraineesTraineeId");
-
-                    b.HasIndex("TraineesTraineeId");
-
-                    b.ToTable("TestTrainee");
-                });
-
-            modelBuilder.Entity("Trainee", b =>
+            modelBuilder.Entity("TraineeFluent", b =>
                 {
                     b.Property<Guid>("TraineeId")
                         .ValueGeneratedOnAdd()
@@ -159,53 +128,38 @@ namespace PetEntityFrameworkProject.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Trainees");
+                    b.ToTable("FluentTrainees", (string)null);
                 });
 
-            modelBuilder.Entity("Address", b =>
+            modelBuilder.Entity("AddressFluent", b =>
                 {
-                    b.HasOne("Company", "Company")
+                    b.HasOne("CompanyFluent", "Company")
                         .WithOne("Address")
-                        .HasForeignKey("Address", "CompanyId")
+                        .HasForeignKey("AddressFluent", "CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("CourseTrainee", b =>
+            modelBuilder.Entity("FluentTraineeTest", b =>
                 {
-                    b.HasOne("Course", null)
+                    b.HasOne("TestFluent", null)
                         .WithMany()
-                        .HasForeignKey("CoursesCourseId")
+                        .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Trainee", null)
+                    b.HasOne("TraineeFluent", null)
                         .WithMany()
-                        .HasForeignKey("TraineesTraineeId")
+                        .HasForeignKey("TraineeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TestTrainee", b =>
+            modelBuilder.Entity("TraineeFluent", b =>
                 {
-                    b.HasOne("Test", null)
-                        .WithMany()
-                        .HasForeignKey("TestsTestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Trainee", null)
-                        .WithMany()
-                        .HasForeignKey("TraineesTraineeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Trainee", b =>
-                {
-                    b.HasOne("Company", "Company")
+                    b.HasOne("CompanyFluent", "Company")
                         .WithMany("Trainees")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -214,7 +168,7 @@ namespace PetEntityFrameworkProject.Migrations
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("Company", b =>
+            modelBuilder.Entity("CompanyFluent", b =>
                 {
                     b.Navigation("Address");
 

@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 
 public class FluentApiDbContext : DbContext {
-    public DbSet<CompanyFluent> Companies { get; set; }
-    public DbSet<TraineeFluent> Trainees { get; set; }
-    public DbSet<TestFluent> Tests { get; set; }
-    public DbSet<AddressFluent> Addresses { get; set; }
+    public DbSet<CompanyFluent> FluentCompanies { get; set; }
+    public DbSet<TraineeFluent> FluentTrainees { get; set; }
+    public DbSet<TestFluent> FluentTests { get; set; }
+    public DbSet<AddressFluent> FluentAddresses { get; set; }
     
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -15,5 +15,5 @@ public class FluentApiDbContext : DbContext {
         new AddressEntityTypeConfiguration().Configure(modelBuilder.Entity<AddressFluent>());
         base.OnModelCreating(modelBuilder);
     }
-    public FluentApiDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
+    public FluentApiDbContext(DbContextOptions<FluentApiDbContext> options) : base(options) {}
 }

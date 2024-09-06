@@ -5,6 +5,9 @@ public class TestEntityTypeConfiguration : IEntityTypeConfiguration<TestFluent>
 {
     public void Configure(EntityTypeBuilder<TestFluent> builder)
     {
+        // Specify table name
+        builder.ToTable("FluentTests");
+
         // Configure primary key
         builder.HasKey(t => t.TestId);
 
@@ -20,7 +23,7 @@ public class TestEntityTypeConfiguration : IEntityTypeConfiguration<TestFluent>
             .WithMany(tr => tr.Tests)
             // Configuring the pivot table is optional, but recommended
             .UsingEntity<Dictionary<string, object>>(
-                "TraineeTest",
+                "FluentTraineeTest",
                 j => j
                     .HasOne<TraineeFluent>()
                     .WithMany()

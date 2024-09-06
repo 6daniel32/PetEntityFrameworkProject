@@ -5,6 +5,9 @@ public class CompanyEntityTypeConfiguration : IEntityTypeConfiguration<CompanyFl
 {
     public void Configure(EntityTypeBuilder<CompanyFluent> builder)
     {
+        // Specify table name
+        builder.ToTable("FluentCompanies");
+
         // Configure primary key
         builder.HasKey(c => c.CompanyId);
 
