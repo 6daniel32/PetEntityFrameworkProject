@@ -1,0 +1,11 @@
+# Use the official .NET SDK image for listening to dotnet commands
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS SDK
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the project files
+COPY . .
+
+# Default command to keep the container running
+CMD ["sleep", "infinity"]

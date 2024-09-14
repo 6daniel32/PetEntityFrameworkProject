@@ -1,4 +1,5 @@
-version: '3'
+version: '3.8'
+
 services:
   postgres-database:
     image: postgres:16.3
@@ -13,8 +14,52 @@ services:
       - postgres-data:/var/lib/postgresql/data
     networks:
       - main-network
+
+  sdk:
+    container_name: sdk
+    build:
+      context: .
+      dockerfile: Dockerfile.sdk
+    volumes:
+      - .:/app
+
+  compiler:
+    container_name: build
+    build:
+      context: .
+      dockerfile: Dockerfile.compiler
+    volumes:
+      - .:/app
+      - latest-build:/app/build
+
+  runtime:
+    container_name: build
+    build:
+      context: .
+      dockerfile: Dockerfile.runtime
+    volumes:
+      - latest-build:/app/build
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5000:80"
+    networks:
+      - main-network
+
+  watcher:
+    container_name: watcher
+    build:
+      context: .
+      dockerfile: Dockerfile.watcher
+    volumes:
+      - latest-build:/app/build
+    restart: unless-stopped
+    profiles: [watcher]
+
 volumes:
   postgres-data:
+  latest-build:
+
 networks:
   main-network:
     driver: bridge

@@ -1,0 +1,14 @@
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS Runtime
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the build output from the build stage
+COPY /app/build .
+
+# Expose the port the app runs on
+EXPOSE 80
+
+# Use environment variable for the application DLL name
+ARG APP_DLL=YourApp.dll
+ENTRYPOINT ["dotnet", "${APP_DLL}"]

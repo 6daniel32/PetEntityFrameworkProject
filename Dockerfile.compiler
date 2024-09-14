@@ -1,0 +1,13 @@
+# Use the official .NET SDK to compile the application
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS Compiler
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the project files
+COPY . .
+
+# Use environment variable for build configuration
+# Store the build in a named volume shared with the runtime container
+ARG CONFIGURATION=Release
+RUN dotnet publish -c $CONFIGURATION -o /app/build

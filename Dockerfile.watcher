@@ -1,0 +1,17 @@
+# Use the official Alpine image
+FROM alpine:latest
+
+# Install inotify-tools
+RUN apk add --no-cache inotify-tools
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the watcher script
+COPY watcher.sh .
+
+# Make the script executable
+RUN chmod +x watcher.sh
+
+# Run the watcher script
+ENTRYPOINT ["./watcher.sh"]
