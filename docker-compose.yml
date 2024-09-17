@@ -29,9 +29,10 @@ services:
       context: .
       dockerfile: Dockerfile.compiler
     environment:
+      - CONFIGURATION=Release
+      - EXECUTABLE_NAME=SelfContainedDeployment
       - ASPNETCORE_ENVIRONMENT=Development
     volumes:
-      - latest-build:/app/bin
       - .:/app
 
   runtime:
@@ -39,12 +40,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.runtime
-      args:
-        EXECUTABLE_NAME: SelfContainedDeployment
+    environment:
+      - CONFIGURATION=Release
+      - EXECUTABLE_NAME=SelfContainedDeployment
+      - ASPNETCORE_ENVIRONMENT=Development
     volumes:
-      - latest-build:/app/bin
+      - .:/app
     ports:
-      - "5000:80"
+      - "5000:5000"
     networks:
       - main-network
 

@@ -1,16 +1,20 @@
 FROM debian:bullseye-slim AS runtime
 
+# Install libicu for globalization support
+RUN apt-get update && apt-get install -y libicu-dev && rm -rf /var/lib/apt/lists/*
+
+# ==== TODO: install curl to check if the app runs inside the container. 
+# Receiving empty response. ==== 
+
 # Set the working directory
-WORKDIR /app/bin
+WORKDIR /app
 
 # Expose the port the app runs on
-EXPOSE 80
+EXPOSE 5000
 
-# Use environment variable for build configuration
-ARG CONFIGURATION=Release
-
-# Get executable name as a parameter
-ARG EXECUTABLE_NAME
+# Use environment variable for deployment configuration
+ENV CONFIGURATION=Release
+ENV EXECUTABLE_NAME=SelfContainedDeployment
 
 # Deploy the latest build (executable file)
-# ENTRYPOINT ["sh", "-c", "./$CONFIGURATION/net8.0/linux-x64/publish/$EXECUTABLE_NAME"]
+ENTRYPOINT ["sh", "-c", "./bin/$CONFIGURATION/net8.0/linux-x64/publish/$EXECUTABLE_NAME"]
