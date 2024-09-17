@@ -1,14 +1,16 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS Runtime
+FROM debian:bullseye-slim AS runtime
 
 # Set the working directory
-WORKDIR /app
-
-# Copy the build output from the build stage
-COPY /app/build .
+WORKDIR /app/bin
 
 # Expose the port the app runs on
 EXPOSE 80
 
-# Use environment variable for the application DLL name
-ARG APP_DLL=YourApp.dll
-ENTRYPOINT ["dotnet", "${APP_DLL}"]
+# Use environment variable for build configuration
+ARG CONFIGURATION=Release
+
+# Get executable name as a parameter
+ARG EXECUTABLE_NAME
+
+# Deploy the latest build (executable file)
+# ENTRYPOINT ["sh", "-c", "./$CONFIGURATION/net8.0/linux-x64/publish/$EXECUTABLE_NAME"]

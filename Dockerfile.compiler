@@ -8,6 +8,20 @@ WORKDIR /app
 COPY . .
 
 # Use environment variable for build configuration
-# Store the build in a named volume shared with the runtime container
 ARG CONFIGURATION=Release
-RUN dotnet publish -c $CONFIGURATION -o /app/build
+
+# Remove previous builds
+RUN rm -rf /app/bin/$CONFIGURATION/net8.0/linux-x64/publish/*
+
+# Store the build in a named volume shared with the runtime container
+ARG EXECUTABLE_NAME
+RUN dotnet publish \
+    -c $CONFIGURATION \
+    -o /app/bin/$CONFIGURATION/net8.0/linux-x64/publish \
+    --self-contained \
+    --runtime linux-x64 \
+    --verbosity=normal \
+    -p:PublishProfile=LocalProfile
+
+# Set execute permissions on the built executable
+# RUN chmod a+x /app/build/$EXECUTABLE_NAME

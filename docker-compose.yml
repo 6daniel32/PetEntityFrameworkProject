@@ -24,23 +24,25 @@ services:
       - .:/app
 
   compiler:
-    container_name: build
+    container_name: compiler
     build:
       context: .
       dockerfile: Dockerfile.compiler
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
     volumes:
+      - latest-build:/app/bin
       - .:/app
-      - latest-build:/app/build
 
   runtime:
-    container_name: build
+    container_name: runtime
     build:
       context: .
       dockerfile: Dockerfile.runtime
+      args:
+        EXECUTABLE_NAME: SelfContainedDeployment
     volumes:
-      - latest-build:/app/build
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - latest-build:/app/bin
     ports:
       - "5000:80"
     networks:

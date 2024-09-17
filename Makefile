@@ -1,6 +1,7 @@
 # Start the development environment
+# TODO: the build stage should be conditional. Abstract logic to script.
 navigate up:
-	docker-compose up -d
+	docker-compose up -d --build
 
 # TODOS: 
 # - Give support to all dotnet commands:
