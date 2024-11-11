@@ -1,11 +1,15 @@
 # Use the official .NET SDK to compile the application
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS Compiler
 
-# Set the working directory
-WORKDIR /app
+WORKDIR /source
 
-# Environment variables for compilation configuration
-ENV CONFIGURATION=Release
-ENV EXECUTABLE_NAME=SelfContainedDeployment
+# Copy csproj and restore as distinct layers
+COPY ./*.csproj .
+RUN dotnet restore
 
-ENTRYPOINT ["sh", "-c", "dotnet publish -c $CONFIGURATION --self-contained --runtime linux-x64 --verbosity=normal -p:AssemblyName=$EXECUTABLE_NAME"]
+# copy and publish app and libraries
+COPY . .
+ENTRYPOINT dotnet publish \
+    -c ${CONFIGURATION} \
+    --no-restore \
+    -p:AssemblyName=${EXECUTABLE_NAME}

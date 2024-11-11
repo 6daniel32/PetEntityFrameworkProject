@@ -15,14 +15,6 @@ services:
     networks:
       - main-network
 
-  sdk:
-    container_name: sdk
-    build:
-      context: .
-      dockerfile: Dockerfile.sdk
-    volumes:
-      - .:/app
-
   compiler:
     container_name: compiler
     build:
@@ -30,10 +22,9 @@ services:
       dockerfile: Dockerfile.compiler
     environment:
       - CONFIGURATION=Release
-      - EXECUTABLE_NAME=SelfContainedDeployment
-      - ASPNETCORE_ENVIRONMENT=Development
+      - EXECUTABLE_NAME=PetEntityFrameworkProject
     volumes:
-      - .:/app
+      - .:/source
 
   runtime:
     container_name: runtime
@@ -42,24 +33,13 @@ services:
       dockerfile: Dockerfile.runtime
     environment:
       - CONFIGURATION=Release
-      - EXECUTABLE_NAME=SelfContainedDeployment
-      - ASPNETCORE_ENVIRONMENT=Development
+      - EXECUTABLE_NAME=PetEntityFrameworkProject
     volumes:
       - .:/app
     ports:
-      - "5000:5000"
+      - "5000:8080"
     networks:
       - main-network
-
-  watcher:
-    container_name: watcher
-    build:
-      context: .
-      dockerfile: Dockerfile.watcher
-    volumes:
-      - latest-build:/app/build
-    restart: unless-stopped
-    profiles: [watcher]
 
 volumes:
   postgres-data:

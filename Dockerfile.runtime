@@ -1,20 +1,7 @@
-FROM debian:bullseye-slim AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 
-# Install libicu for globalization support
-RUN apt-get update && apt-get install -y libicu-dev && rm -rf /var/lib/apt/lists/*
-
-# ==== TODO: install curl to check if the app runs inside the container. 
-# Receiving empty response. ==== 
-
-# Set the working directory
 WORKDIR /app
-
-# Expose the port the app runs on
-EXPOSE 5000
-
-# Use environment variable for deployment configuration
-ENV CONFIGURATION=Release
-ENV EXECUTABLE_NAME=SelfContainedDeployment
+EXPOSE 8080
 
 # Deploy the latest build (executable file)
-ENTRYPOINT ["sh", "-c", "./bin/$CONFIGURATION/net8.0/linux-x64/publish/$EXECUTABLE_NAME"]
+ENTRYPOINT ./bin/${CONFIGURATION}/net8.0/${EXECUTABLE_NAME}
