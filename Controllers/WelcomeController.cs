@@ -6,6 +6,6 @@ public class WelcomeController : Controller
     [HttpGet("/")]
     public string Index()
     {
-        return "Hello world!";
+        return "Hi world!";
     }
 }
