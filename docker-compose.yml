@@ -15,19 +15,11 @@ services:
     networks:
       - main-network
 
-  sdk:
-    container_name: sdk
-    build:
-      context: .
-      dockerfile: Dockerfile.sdk
-    volumes:
-      - .:/app
-
   compiler:
     container_name: compiler
     build:
       context: .
-      dockerfile: Dockerfile.compiler
+      dockerfile: ./local-infra/containers/Dockerfile.compiler
     environment:
       - CONFIGURATION=Release
       - EXECUTABLE_NAME=PetEntityFrameworkProject
@@ -38,7 +30,7 @@ services:
     container_name: runtime
     build:
       context: .
-      dockerfile: Dockerfile.runtime
+      dockerfile: ./local-infra/containers/Dockerfile.runtime
     environment:
       - CONFIGURATION=Release
       - EXECUTABLE_NAME=PetEntityFrameworkProject
