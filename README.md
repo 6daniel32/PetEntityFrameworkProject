@@ -80,6 +80,8 @@ Package for managing EF from the CLI (needed to run your migrations):
 ### 4. Install the ef tool locally
 First, add a tool-manifest for the project
 > dotnet new tool-manifest
+<br>
+
 Second, locally install the EF tool in order to manage EF from the CLI
 > dotnet tool install dotnet-ef
 <br> 
