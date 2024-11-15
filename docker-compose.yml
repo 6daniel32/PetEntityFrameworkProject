@@ -41,6 +41,14 @@ services:
     networks:
       - main-network
 
+  sdk:
+    container_name: sdk
+    build:
+      context: .
+      dockerfile: ./local-infra/containers/Dockerfile.sdk
+    volumes:
+      - .:/app
+
 volumes:
   postgres-data:
   latest-build:

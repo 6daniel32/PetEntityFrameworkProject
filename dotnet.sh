@@ -7,6 +7,30 @@ case $1 in
     source ./local-infra/scripts/dotnet/run.sh
     ;;
 
+  restore)
+    docker exec sdk dotnet restore 
+    ;;
+
+  new)
+    echo 'WIP' 
+    ;;
+
+  watch)
+    echo 'WIP' 
+    ;;
+
+  user-secrets)
+    echo 'WIP' 
+    ;;
+
+  add package)
+    echo 'WIP' 
+    ;;
+
+  ef)
+    echo 'WIP' 
+    ;;
+
   *)
     echo "Please, specify a valid dotnet command"
     ;;
