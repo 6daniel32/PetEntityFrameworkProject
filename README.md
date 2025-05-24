@@ -93,7 +93,7 @@ This class must inherit from Microsoft.EntityFrameworkCore.DbContext and expose 
 ### 6. Add your DbContext to the service container of your web application
 This can be done using the "AddDbContext" extension method in the "Services" property of your app. This method takes a configuration function that receives an instance of "DbContextOptionsBuilder" as a parameter. You will apply another extension method 
 "Use{DatabaseProvider}" to set the database provider. Example:
-> builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+> builder.Services.AddDbContext\<AppDbContext\>(options => options.UseNpgsql(connectionString));
 <br>
 
 ### 7. Create your models and add them to your DbContext class
